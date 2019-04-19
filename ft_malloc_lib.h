@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <sys/mman.h>
-//#include "libft/libft.h"
+#include "libft/libft.h"
 
 #define MMAP(ptr, size) mmap((ptr), (size), PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
 #define PAGE_SIZE sysconf(_SC_PAGESIZE)
@@ -41,12 +41,11 @@ typedef struct s_zone
 
 void *start_address;
 void *block_address;
+void *zone_address;
 
 
 void *malloc(size_t);
 t_zone *extend_memory(size_t size);
 t_zone *find_zone(t_zone *begin, void *address);
-
-//void    ft_bzero(void *s, size_t n);
 
 #endif //MALLOC_FT_MALLOC_LIB_H
