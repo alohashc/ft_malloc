@@ -31,7 +31,7 @@ typedef struct s_zone
     int type;
     size_t size;
     size_t available_space;
-    t_block  *begin;
+    t_block  *blocks;
 
     struct s_zone *next;
     struct s_zone *prev;
@@ -40,12 +40,12 @@ typedef struct s_zone
 }               t_zone;
 
 void *start_address;
-void *block_address;
-void *zone_address;
 
 
 void *malloc(size_t);
-t_zone *extend_memory(size_t size);
+t_block *extend_memory(size_t size);
 t_zone *find_zone(t_zone *begin, void *address);
+
+void free(void *ptr);
 
 #endif //MALLOC_FT_MALLOC_LIB_H
