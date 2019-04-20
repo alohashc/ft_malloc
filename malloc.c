@@ -47,7 +47,7 @@ t_zone *getOptimalSize(size_t size, t_zone *block)
     return (block);
 }
 
-t_block *init_first_block(void *address, size_t size)
+t_block *init_first_block(void *address, size_t size, t_zone *zone)
 {
     t_block *new_block;
 
@@ -56,7 +56,7 @@ t_block *init_first_block(void *address, size_t size)
     new_block->size = size;
     new_block->address = address;
     new_block->next = NULL;
-
+    zone->available_space = zone->available_space - sizeof(t_zone) - size;
     return (new_block);
 }
 
@@ -70,7 +70,7 @@ t_block *new_block_init(t_zone *zone, size_t size)
         block = zone->blocks;
         while (block->next != NULL)
             block = block->next;
-        res = init_first_block(block->address + block->size + sizeof(t_block), size);
+        res = init_first_block(block->address + block->size + sizeof(t_block), size, zone);
         block->next = res;
     }
     return res;
@@ -92,7 +92,6 @@ t_zone *is_valid_zone(t_zone *zone, size_t  size)
     {
         if (curr_zone->available_space >= size + sizeof(t_block) && curr_zone->type == type)
         {
-            curr_zone->available_space = zone->available_space - sizeof(t_zone) - size;
             return (curr_zone);
         }
         curr_zone = curr_zone->next;
@@ -111,7 +110,7 @@ t_block *add_zone(t_zone *zone, size_t size)
     }
     curr_zone->next = getOptimalSize(size, curr_zone->next);
     curr_zone = curr_zone->next;
-    curr_zone->blocks = init_first_block(curr_zone->blocks, size);
+    curr_zone->blocks = init_first_block(curr_zone->blocks, size, curr_zone);
 
     return curr_zone->blocks;
 }
@@ -143,8 +142,8 @@ t_block *extend_memory(size_t size)
     {
         zone = getOptimalSize(size, zone);
         start_address = zone;
-        zone->available_space = zone->size - sizeof(t_zone) - size;
-        block = init_first_block(zone->blocks, size);
+//        zone->available_space = zone->size - sizeof(t_zone) - size;
+        block = init_first_block(zone->blocks, size, zone);
     }
     else
     {

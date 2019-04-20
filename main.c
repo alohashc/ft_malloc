@@ -23,12 +23,14 @@ int main()
 
 //    ft_putendl(str);
 //    ft_putendl(str1);
-//    free(str);
+
     str = malloc(sizeof(char)* 1000);
     str1 = malloc(sizeof(char)* 1000);
     str2 = malloc(sizeof(char)* 1000);
     str3 = malloc(sizeof(char)* 1000);
-    str4 = malloc(sizeof(char)* 100);
+//    str4 = malloc(sizeof(char)* 100);
+
+    free(str3);
 
     return (0);
 }
