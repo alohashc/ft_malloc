@@ -21,7 +21,7 @@ typedef struct s_block
     size_t  size;
     void    *address;
     struct s_block *next;
-    struct s_block *prev;
+    void *zone;
     int is_available;
 
 }               t_block;
@@ -47,5 +47,8 @@ t_block *extend_memory(size_t size);
 t_zone *find_zone(t_zone *begin, void *address);
 
 void free(void *ptr);
+
+void *realloc(void *ptr, size_t size);
+int is_space(t_zone *zone, size_t size);
 
 #endif //MALLOC_FT_MALLOC_LIB_H

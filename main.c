@@ -27,7 +27,8 @@ int main()
     str = malloc(sizeof(char)* 1000);
     str1 = malloc(sizeof(char)* 1000);
     str2 = malloc(sizeof(char)* 1000);
-    str3 = malloc(sizeof(char)* 1000);
+    str3 = malloc(sizeof(char)* 5000);
+    str2 = realloc(str2, 2000);
 //    str4 = malloc(sizeof(char)* 100);
 
     free(str3);

@@ -55,6 +55,7 @@ t_block *init_first_block(void *address, size_t size, t_zone *zone)
     new_block = (t_block*)address;
     new_block->size = size;
     new_block->address = address;
+    new_block->zone = zone;
     new_block->next = NULL;
     zone->available_space = zone->available_space - sizeof(t_zone) - size;
     return (new_block);
@@ -76,6 +77,14 @@ t_block *new_block_init(t_zone *zone, size_t size)
     return res;
 }
 
+int is_space(t_zone *zone, size_t size)
+{
+    if (zone->available_space >= size + sizeof(t_block))
+        return (1);
+    else
+        return (0);
+}
+
 t_zone *is_valid_zone(t_zone *zone, size_t  size)
 {
     t_zone *curr_zone;
@@ -90,9 +99,10 @@ t_zone *is_valid_zone(t_zone *zone, size_t  size)
     curr_zone = zone;
     while (curr_zone != NULL)
     {
-        if (curr_zone->available_space >= size + sizeof(t_block) && curr_zone->type == type)
+        if (curr_zone->type == type)
         {
-            return (curr_zone);
+            if (is_space(curr_zone, size))
+                return (curr_zone);
         }
         curr_zone = curr_zone->next;
     }
