@@ -2,7 +2,7 @@
 // Created by aloha on 20.04.19.
 //
 
-#include "ft_malloc_lib.h"
+#include "inc/ft_malloc_lib.h"
 
 t_block *find_block(void * address, size_t size)
 {
@@ -10,7 +10,7 @@ t_block *find_block(void * address, size_t size)
     t_block *curr_block;
 
     curr_block = NULL;
-    curr_zone = (t_zone*)start_address;
+    curr_zone = (t_zone*)g_zone;
     while (curr_zone)
     {
         curr_block = curr_zone->blocks;

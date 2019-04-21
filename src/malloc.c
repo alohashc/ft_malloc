@@ -2,7 +2,7 @@
 // Created by aloha on 17.04.19.
 //
 
-#include "ft_malloc_lib.h"
+#include "inc/ft_malloc_lib.h"
 
 
 void *init_zone(t_zone *zone, size_t size, int type)
@@ -17,7 +17,6 @@ void *init_zone(t_zone *zone, size_t size, int type)
     zone->blocks = (void*)zone + sizeof(t_zone);
     zone->address = (void *)zone;
     zone->next = NULL;
-    zone->prev = NULL;
     return (zone);
 }
 
@@ -57,7 +56,7 @@ t_block *init_first_block(void *address, size_t size, t_zone *zone)
     new_block->address = address;
     new_block->zone = zone;
     new_block->next = NULL;
-    zone->available_space = zone->available_space - sizeof(t_zone) - size;
+    zone->available_space = zone->available_space - sizeof(t_block) - size;
     return (new_block);
 }
 
@@ -147,12 +146,11 @@ t_block *extend_memory(size_t size)
     t_zone *zone;
     t_block *block;
 
-    zone = (t_zone*)start_address;
+    zone = (t_zone*)g_zone;
     if (zone == NULL)
     {
         zone = getOptimalSize(size, zone);
-        start_address = zone;
-//        zone->available_space = zone->size - sizeof(t_zone) - size;
+        g_zone = zone;
         block = init_first_block(zone->blocks, size, zone);
     }
     else

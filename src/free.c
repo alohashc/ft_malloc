@@ -2,7 +2,7 @@
 // Created by Andrii Lohashchuk on 2019-04-20.
 //
 
-#include "ft_malloc_lib.h"
+#include "inc/ft_malloc_lib.h"
 
 
 void deallocate(t_block *del, t_zone *zone)
@@ -34,13 +34,13 @@ void delete_zone(t_zone *del)
     t_zone *curr;
 
     prev = NULL;
-    curr = start_address;
+    curr = g_zone;
     while (curr != NULL)
     {
         if (del == curr)
         {
             if (!prev)
-                start_address = curr->next;
+                g_zone = curr->next;
             else
                 prev->next = curr->next;
             munmap(del, del->size);
@@ -58,8 +58,8 @@ void free(void *ptr)
     t_zone *prev;
 
     prev = NULL;
-    curr_zone = (t_zone*)start_address;
-    if (ptr != NULL && start_address != NULL)
+    curr_zone = (t_zone*)g_zone;
+    if (ptr != NULL && g_zone != NULL)
     {
         while (curr_zone != NULL)
         {
@@ -76,7 +76,7 @@ void free(void *ptr)
                     if (prev)
                         prev = curr_zone->next;
                     else
-                        start_address = curr_zone->next;
+                        g_zone = curr_zone->next;
                     delete_zone(curr_zone);
                     break;
                 }

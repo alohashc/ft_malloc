@@ -6,7 +6,7 @@
 /*   By: rmalkevy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 12:47:11 by rmalkevy          #+#    #+#             */
-/*   Updated: 2017/02/22 13:45:37 by alohashc         ###   ########.fr       */
+/*   Updated: 2019/04/21 13:00:50 by alohashc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# define ABS(x) (((x) < 0) ? -(x) : (x))
 
 typedef struct		s_list
 {
@@ -87,5 +88,7 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 int					get_next_line(int fd, char **line);
 int					ft_atoi_hex(char *str);
+char				*ft_itoa_base(const intmax_t nmb, const unsigned int base,
+													const char base_case);
 
 #endif

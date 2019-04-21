@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_malloc_lib.h"
+#include "inc/ft_malloc_lib.h"
 
 void	ft_bzero(void *s, size_t n)
 {
